@@ -38,8 +38,18 @@ class ViewController: UIViewController, WKNavigationDelegate {
         let refresh = UIBarButtonItem(barButtonSystemItem: .refresh,
                                       target: webView,
                                       action: #selector(webView.reload))
+        
+        let back = UIBarButtonItem(title: "Back",
+                                   style: .plain,
+                                   target: webView,
+                                   action: #selector(webView.goBack))
+        
+        let forward = UIBarButtonItem(title: "Forward",
+                                      style: .plain,
+                                      target: webView,
+                                      action: #selector(webView.goForward))
 
-        toolbarItems = [progressButton, spacer, refresh]
+        toolbarItems = [progressButton, spacer, back, forward, refresh]
         navigationController?.isToolbarHidden = false
         
         webView.addObserver(self,
@@ -76,6 +86,14 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
         
         decisionHandler(.cancel)
+        
+        let ac = UIAlertController(title: "It's Blocked",
+                                   message: nil,
+                                   preferredStyle: .alert)
+        
+        ac.addAction(UIAlertAction(title: "Cancel",
+                                   style: .cancel))
+        present(ac, animated: true)
     }
     
     @objc func openTapped() {
@@ -106,4 +124,3 @@ class ViewController: UIViewController, WKNavigationDelegate {
         title = webView.title
     }
 }
-
